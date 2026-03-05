@@ -57,12 +57,13 @@ function addMsg(text, cls) {
     return div;
 }
 
-// Initial Listener
-document.addEventListener('DOMContentLoaded', () => {
+// Bind Enter key after HTMX loads the chat component
+document.body.addEventListener('htmx:afterSettle', function () {
     const chatIn = document.getElementById('chat-in');
-    if (chatIn) {
+    if (chatIn && !chatIn._boundEnter) {
         chatIn.addEventListener('keydown', e => {
             if (e.key === 'Enter') sendChat();
         });
+        chatIn._boundEnter = true;
     }
 });

@@ -27,10 +27,65 @@ const WX_QUIPS = {
     snow: 'Cold weather parameters met. E-commerce conversion rates trend upward in these conditions.',
 };
 
+/**
+ * Reverse-geocode coordinates to a city name using OpenStreetMap Nominatim (free, no key).
+ */
+async function reverseGeocode(lat, lon) {
+    try {
+        const r = await fetch(`https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json&zoom=10`, {
+            headers: { 'Accept-Language': 'en' }
+        });
+        const d = await r.json();
+        // Try city → town → county → state as fallbacks
+        return d.address.city || d.address.town || d.address.county || d.address.state || 'Your City';
+    } catch (e) {
+        console.warn('Reverse geocode failed:', e);
+        return null;
+    }
+}
+
+/**
+ * Load weather data. Tries browser geolocation first, falls back to Vercel IP headers.
+ */
 async function loadWeather(apiBase = '') {
     try {
-        // Relying entirely on our backend to detect location via Vercel headers
-        const r = await fetch(`${apiBase}/api/weather`);
+        // Step 1: Try browser geolocation for precise location
+        let lat = null, lon = null, city = null;
+
+        if ('geolocation' in navigator) {
+            try {
+                const pos = await new Promise((resolve, reject) => {
+                    navigator.geolocation.getCurrentPosition(resolve, reject, {
+                        enableHighAccuracy: false,
+                        timeout: 5000,
+                        maximumAge: 600000 // Cache for 10 min
+                    });
+                });
+                lat = pos.coords.latitude.toFixed(4);
+                lon = pos.coords.longitude.toFixed(4);
+
+                // Reverse geocode to get city name
+                city = await reverseGeocode(lat, lon);
+            } catch (geoErr) {
+                // User denied or timeout — fall through to Vercel headers
+                console.log('Geolocation unavailable, using IP-based location:', geoErr.message);
+            }
+        }
+
+        // Step 2: Call weather API (with or without browser coords)
+        let url = `${apiBase}/api/weather`;
+        const params = new URLSearchParams();
+        if (lat && lon) {
+            params.set('lat', lat);
+            params.set('lon', lon);
+        }
+        if (city) {
+            params.set('city', city);
+        }
+        const qs = params.toString();
+        if (qs) url += '?' + qs;
+
+        const r = await fetch(url);
         const d = await r.json();
         if (d.ok && d.weather) applyWeather(d.weather);
         else throw new Error("Weather API failed");

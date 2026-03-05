@@ -1,6 +1,6 @@
 // ── Digitally Agency — Ticker Module ─────────────────────────────────────────
 
-function loadStocks() {
+function loadStocks(apiBase = '') {
   // Previously we loaded fake stocks. Now we only build the performance ticker.
   buildPerformanceTicker();
 }

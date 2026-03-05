@@ -54,7 +54,7 @@ def add_security_headers(resp):
         "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
         "font-src 'self' https://fonts.gstatic.com; "
         "img-src 'self' data:; "
-        "connect-src 'self' https://api.open-meteo.com"
+        "connect-src 'self' https://api.open-meteo.com https://nominatim.openstreetmap.org"
     )
     resp.headers["Content-Security-Policy"] = csp
     return resp
