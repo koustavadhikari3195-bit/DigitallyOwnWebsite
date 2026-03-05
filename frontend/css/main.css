@@ -1588,7 +1588,14 @@ footer {
   }
 
   .ticker-outer {
+    display: flex;
+    flex: 1;
+    border-right: none;
+  }
+
+  .nav-links {
     display: none;
+    /* Hide nav links on mobile to make room for ticker */
   }
 
   #wx-nav {
@@ -1680,5 +1687,33 @@ footer {
   .stats-row {
     margin-top: 40px;
     padding-top: 30px;
+  }
+
+  /* Roaster Mobile Fix */
+  .url-row {
+    flex-direction: column;
+    gap: 0;
+    max-width: 100%;
+  }
+
+  .url-pre {
+    border: 1px solid var(--border2);
+    border-bottom: none;
+    padding: 12px;
+    justify-content: center;
+  }
+
+  #url-in {
+    border: 1px solid var(--border2);
+    border-bottom: none;
+    width: 100%;
+    padding: 14px;
+    text-align: center;
+  }
+
+  #r-btn {
+    width: 100%;
+    padding: 16px;
+    border: 1px solid var(--red);
   }
 }
