@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+@theme {
+    --color-digitally-cyan: #00f5d4;
+    --color-digitally-blue: #0ea5e9;
+    --color-digitally-deep: #07090f;
+    --color-digitally-panel: #0c1018;
+
+    --font-syne: 'Syne', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+    --font-jb: 'JetBrains Mono', monospace;
+}

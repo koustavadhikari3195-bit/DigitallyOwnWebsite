@@ -128,8 +128,21 @@ document.addEventListener('DOMContentLoaded', () => {
     initStack();
     updateLocalClock();
 
-    if (typeof loadStocks === 'function') loadStocks(API);
-    if (typeof loadWeather === 'function') loadWeather(API);
+    // Run immediately if present
+    if (typeof loadStocks === 'function' && document.getElementById('ticker-rail')) loadStocks(API);
+    if (typeof loadWeather === 'function' && document.getElementById('wx-strip')) loadWeather(API);
+
+    // Run when HTMX dynamically injects them
+    document.body.addEventListener('htmx:afterSettle', (e) => {
+        if (typeof loadStocks === 'function' && document.getElementById('ticker-rail') && !window._stocksLoaded) {
+            loadStocks(API);
+            window._stocksLoaded = true;
+        }
+        if (typeof loadWeather === 'function' && document.getElementById('wx-strip') && !window._weatherLoaded) {
+            loadWeather(API);
+            window._weatherLoaded = true;
+        }
+    });
 
     setInterval(() => {
         if (typeof loadStocks === 'function') loadStocks(API);

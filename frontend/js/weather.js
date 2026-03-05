@@ -19,21 +19,36 @@ const WX_PALETTE = {
 };
 
 const WX_QUIPS = {
-    sunny: 'Clear skies = high screen time. Prime window for Meta Ads.',
-    cloudy: 'Overcast — but opportunity isn\'t. Your SEO can still shine.',
-    rainy: 'Rain keeps people indoors and on their phones. Ad engagement spikes now.',
-    stormy: 'Storm outside — the kind of intensity we bring to competitor teardowns.',
-    foggy: 'Low visibility out there. Make sure your Google ranking isn\'t the same.',
-    snow: 'Cold weather, cozy browsing. Conversion rates tend to climb.',
+    sunny: 'High visibility conditions. Optimal window for scaling top-of-funnel campaigns.',
+    cloudy: 'Overcast conditions detected. Search volume and intent often shift during low-light periods.',
+    rainy: 'Precipitation active. Screen time and ad engagement typically see a 12-18% lift.',
+    stormy: 'Severe weather. High probability of elevated digital consumption and reduced CPA.',
+    foggy: 'Low physical visibility. Prime opportunity to dominate search and display share of voice.',
+    snow: 'Cold weather parameters met. E-commerce conversion rates trend upward in these conditions.',
 };
 
 async function loadWeather(apiBase = '') {
+    let loc = { city: 'GLOBAL', lat: 0, lon: 0 };
     try {
-        const r = await fetch(`${apiBase}/api/weather`);
+        // Attempt to get real user location via IP
+        const ipReq = await fetch('https://ipapi.co/json/');
+        const ipData = await ipReq.json();
+        if (ipData && ipData.city && ipData.latitude) {
+            loc = { city: ipData.city, lat: ipData.latitude, lon: ipData.longitude };
+        }
+    } catch (e) {
+        console.warn("IP Geo failed, defaulting to GLOBAL");
+    }
+
+    try {
+        // Pass coordinates to our backend proxy if we have them
+        const query = loc.lat ? `?lat=${loc.lat}&lon=${loc.lon}&city=${encodeURIComponent(loc.city)}` : '';
+        const r = await fetch(`${apiBase}/api/weather${query}`);
         const d = await r.json();
         if (d.ok && d.weather) applyWeather(d.weather);
+        else throw new Error("Weather API failed");
     } catch (e) {
-        applyWeather({ city: 'Kolkata', temp: 30, condition: 'sunny', desc: 'Clear Sky', wind: 12 });
+        applyWeather({ city: loc.city, temp: '--', condition: 'cloudy', desc: 'Data Syncing', wind: '--' });
     }
 }
 

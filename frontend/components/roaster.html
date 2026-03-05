@@ -12,13 +12,16 @@
             <div class="r-title-bar">digitally://ai-diagnostic-engine/v4.0 — Powered by Groq</div>
         </div>
         <div class="r-body">
-            <h3 class="r-h">Submit Your Site.<br>Survive the <span class="fire">Roast.</span></h3>
-            <p class="r-sub">Powered by Llama 3 on Groq. No fluff. No participation trophies. A live diagnostic that
-                tells you exactly what's costing you customers.</p>
+            <h3 class="r-h">Submit Your Site.<br>Uncover the <span class="fire" style="color:var(--cyan)">Truth.</span>
+            </h3>
+            <p class="r-sub">Powered by Groq & Llama 3. Data-driven insights revealing exactly what's bottlenecking your
+                conversions and costing you customers.</p>
             <div class="url-row">
                 <span class="url-pre">https://</span>
                 <input type="text" id="url-in" placeholder="yourwebsite.com" />
-                <button id="r-btn" onclick="startRoast()">▶ ROAST IT</button>
+                <button id="r-btn" class="btn-p"
+                    style="border-radius:0; border:none; border-left: 1px solid var(--border2);"
+                    onclick="startRoast()">ANALYZE SITE</button>
             </div>
             <div class="scan-log" id="scan-log"></div>
             <div class="r-result" id="r-result"></div>

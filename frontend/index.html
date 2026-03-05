@@ -14,7 +14,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://unpkg.com">
-  <link rel="preconnect" href="https://cdn.tailwindcss.com">
   <link rel="preconnect" href="https://cdn.jsdelivr.net">
 
   <!-- Fonts -->
@@ -23,38 +22,18 @@
     rel="stylesheet">
 
   <!-- Libraries -->
-  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
-  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <!-- Tailwind Compiled Production CSS -->
+  <link rel="preload" href="css/tailwind.css" as="style">
+  <link rel="stylesheet" href="css/tailwind.css">
 
   <!-- Custom Styles (Preloaded for faster paint) -->
   <link rel="preload" href="css/main.css" as="style">
   <link rel="stylesheet" href="css/main.css">
 
-  <!-- Tailwind Config (for custom colors/fonts if needed) -->
-  <script>
-    tailwind.config = {
-      theme: {
-        extend: {
-          colors: {
-            digitally: {
-              cyan: '#00f5d4',
-              blue: '#0ea5e9',
-              deep: '#07090f',
-              panel: '#0c1018'
-            }
-          },
-          fontFamily: {
-            syne: ['Syne', 'sans-serif'],
-            mono: ['Space Mono', 'monospace'],
-            jb: ['JetBrains Mono', 'monospace']
-          }
-        }
-      }
-    }
-  </script>
+  <!-- HTMX & Alpine -->
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <body hx-headers='{"X-CSRFToken": "TBD-IF-NEEDED"}'>

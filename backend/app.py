@@ -146,17 +146,18 @@ def stocks_refresh_loop():
 
 # ── WEATHER ───────────────────────────────────────────────────────────────────
 # ── WEATHER ───────────────────────────────────────────────────────────────────
-def fetch_weather(city="Kolkata"):
-    """Fetch live weather from Open-Meteo (Kolkata region). No key required."""
+def fetch_weather(city="GLOBAL", lat=None, lon=None):
+    """Fetch live weather from Open-Meteo for the user's IP location."""
     now = time.time()
     if city in _weather_cache and now - _weather_cache[city]["ts"] < WEATHER_TTL:
         return _weather_cache[city]["data"]
 
     try:
-        # Default to Kolkata coordinates: 22.57, 88.36
-        lat, lon = 22.57, 88.36
+        # Default to a global fallback if no coordinates provided
+        used_lat = lat if lat else 51.5074 # London fallback
+        used_lon = lon if lon else -0.1278
         url = (f"https://api.open-meteo.com/v1/forecast"
-               f"?latitude={lat}&longitude={lon}&current=temperature_2m,weather_code,wind_speed_10m&timezone=auto")
+               f"?latitude={used_lat}&longitude={used_lon}&current=temperature_2m,weather_code,wind_speed_10m&timezone=auto")
         
         r = requests.get(url, timeout=5)
         r.raise_for_status()
@@ -244,10 +245,12 @@ def api_stocks():
 
 @app.route("/api/weather")
 def api_weather():
-    """GET /api/weather?city=Kolkata"""
-    city = request.args.get("city", "Kolkata")
+    """GET /api/weather?city=X&lat=Y&lon=Z"""
+    city = request.args.get("city", "GLOBAL")
+    lat = request.args.get("lat")
+    lon = request.args.get("lon")
     try:
-        data = fetch_weather(city)
+        data = fetch_weather(city, lat, lon)
         return jsonify({"ok": True, "weather": data})
     except Exception as e:
         return jsonify({"ok": False, "error": str(e)}), 500

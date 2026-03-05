@@ -737,28 +737,6 @@ h1.hero-h .c2 {
   color: var(--muted);
 }
 
-#r-btn {
-  background: var(--red);
-  color: var(--white);
-  border: none;
-  padding: 13px 24px;
-  font-family: 'Space Mono', monospace;
-  font-size: 12px;
-  font-weight: 700;
-  cursor: none;
-  transition: background .2s, box-shadow .2s;
-  white-space: nowrap;
-  letter-spacing: .3px;
-}
-
-#r-btn:hover {
-  background: #e11d48;
-  box-shadow: 0 0 28px rgba(244, 63, 94, .35);
-}
-
-#r-btn:disabled {
-  background: var(--muted);
-}
 
 .scan-log {
   background: var(--deep);
@@ -1727,9 +1705,5 @@ footer {
     text-align: center;
   }
 
-  #r-btn {
-    width: 100%;
-    padding: 16px;
-    border: 1px solid var(--red);
-  }
+
 }
