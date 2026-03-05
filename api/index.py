@@ -28,6 +28,7 @@ def fetch_weather(city="GLOBAL", lat=None, lon=None):
         return _weather_cache[city]["data"]
 
     try:
+        # Default fallbacks
         used_lat = lat if lat else 51.5074
         used_lon = lon if lon else -0.1278
         url = (f"https://api.open-meteo.com/v1/forecast"
@@ -40,7 +41,7 @@ def fetch_weather(city="GLOBAL", lat=None, lon=None):
         code = d["weather_code"]
         wind = d["wind_speed_10m"]
 
-        # Basic Condition Mapping
+        # 10/10 Condition Mapping
         cond, desc = "sunny", "Clear"
         if code in [1, 2, 3]: cond, desc = "cloudy", "Partly Cloudy"
         elif code in [45, 48]: cond, desc = "foggy", "Foggy"
@@ -76,6 +77,7 @@ def call_ai(system_prompt, user_prompt, max_tokens=1024):
 
 @app.route("/api/weather")
 def api_weather():
+    # Vercel Native Edge Geolocation Headers
     v_city = request.headers.get("x-vercel-ip-city")
     v_lat  = request.headers.get("x-vercel-ip-latitude")
     v_lon  = request.headers.get("x-vercel-ip-longitude")
@@ -94,7 +96,7 @@ def api_chat():
     ctx  = body.get("context", {})
 
     sys_prompt = (
-        "You are the Digitally Agency AI. Be concise, professional, and confident. "
+        "You are the Digitally Agency AI Advisor. Be concise, professional, and helpful. "
         "User context: " + str(ctx)
     )
     user_prompt = msgs[-1]["content"] if msgs else "Hello"
@@ -111,8 +113,8 @@ def api_roast():
     url  = body.get("url", "").strip()
     if not url: return jsonify({"ok": False, "error": "url required"}), 400
 
-    sys_prompt = "You are a brutal but professional website auditor. Roast the following website URL concisely."
-    user_prompt = f"Website: {url}"
+    sys_prompt = "You are a professional website auditor. Provide a concise, data-driven roast of the following URL focusing on conversion bottlenecks."
+    user_prompt = f"Website URL: {url}"
 
     try:
         roast = call_ai(sys_prompt, user_prompt)
@@ -120,6 +122,6 @@ def api_roast():
     except Exception as e:
         return jsonify({"ok": False, "error": str(e)}), 500
 
-# Vercel entry point
-def handler(event, context):
-    return app(event, context)
+# Vercel requires the app object to be named 'app'
+if __name__ == "__main__":
+    app.run(debug=True)
