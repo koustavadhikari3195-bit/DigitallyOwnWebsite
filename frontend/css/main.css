@@ -360,7 +360,7 @@ nav {
 h1.hero-h {
   font-size: clamp(52px, 7.5vw, 104px);
   font-weight: 800;
-  line-height: .93;
+  line-height: 1.1;
   color: var(--white);
   letter-spacing: -3.5px;
   max-width: 900px;
