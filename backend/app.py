@@ -246,9 +246,18 @@ def api_stocks():
 @app.route("/api/weather")
 def api_weather():
     """GET /api/weather?city=X&lat=Y&lon=Z"""
-    city = request.args.get("city", "GLOBAL")
-    lat = request.args.get("lat")
-    lon = request.args.get("lon")
+    # Vercel Native Edge Geolocation Headers
+    v_city = request.headers.get("x-vercel-ip-city")
+    v_lat = request.headers.get("x-vercel-ip-latitude")
+    v_lon = request.headers.get("x-vercel-ip-longitude")
+
+    city = request.args.get("city")
+    if not city or city == "GLOBAL":
+        city = v_city or "GLOBAL"
+
+    lat = request.args.get("lat") or v_lat
+    lon = request.args.get("lon") or v_lon
+
     try:
         data = fetch_weather(city, lat, lon)
         return jsonify({"ok": True, "weather": data})

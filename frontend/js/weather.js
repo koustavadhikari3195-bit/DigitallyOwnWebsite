@@ -28,27 +28,15 @@ const WX_QUIPS = {
 };
 
 async function loadWeather(apiBase = '') {
-    let loc = { city: 'GLOBAL', lat: 0, lon: 0 };
     try {
-        // Attempt to get real user location via IP
-        const ipReq = await fetch('https://ipapi.co/json/');
-        const ipData = await ipReq.json();
-        if (ipData && ipData.city && ipData.latitude) {
-            loc = { city: ipData.city, lat: ipData.latitude, lon: ipData.longitude };
-        }
-    } catch (e) {
-        console.warn("IP Geo failed, defaulting to GLOBAL");
-    }
-
-    try {
-        // Pass coordinates to our backend proxy if we have them
-        const query = loc.lat ? `?lat=${loc.lat}&lon=${loc.lon}&city=${encodeURIComponent(loc.city)}` : '';
-        const r = await fetch(`${apiBase}/api/weather${query}`);
+        // Relying entirely on our backend to detect location via Vercel headers
+        const r = await fetch(`${apiBase}/api/weather`);
         const d = await r.json();
         if (d.ok && d.weather) applyWeather(d.weather);
         else throw new Error("Weather API failed");
     } catch (e) {
-        applyWeather({ city: loc.city, temp: '--', condition: 'cloudy', desc: 'Data Syncing', wind: '--' });
+        console.warn("Weather sync failed:", e);
+        applyWeather({ city: 'GLOBAL', temp: '--', condition: 'cloudy', desc: 'Data Syncing', wind: '--' });
     }
 }
 
