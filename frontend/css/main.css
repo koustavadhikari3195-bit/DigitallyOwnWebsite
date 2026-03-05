@@ -1641,4 +1641,44 @@ footer {
     width: calc(100vw - 56px);
     right: 28px;
   }
+
+  /* Mobile Hero Adjustments */
+  h1.hero-h {
+    font-size: clamp(26px, 8vw, 42px);
+    line-height: 1.15;
+    letter-spacing: -1px;
+    margin-bottom: 18px;
+    overflow-wrap: break-word;
+  }
+
+  .eyebrow {
+    font-size: 9px;
+    letter-spacing: 1px;
+    margin-bottom: 12px;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .eyebrow::before {
+    width: 18px;
+  }
+
+  .hero-sub {
+    font-size: 11px;
+    line-height: 1.5;
+    margin-bottom: 24px;
+    max-width: 100%;
+  }
+
+  #wx-strip {
+    flex-wrap: wrap;
+    gap: 6px;
+    font-size: 10px;
+    margin-bottom: 14px;
+  }
+
+  .stats-row {
+    margin-top: 40px;
+    padding-top: 30px;
+  }
 }
