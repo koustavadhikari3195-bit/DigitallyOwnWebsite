@@ -256,15 +256,18 @@ def api_roast():
         "You are funny but constructive. You always end with actionable fixes."
     )
     user = f"""Roast the website {domain}. 
-Return ONLY a JSON object (no markdown, no backticks, no explanation):
+Return ONLY a JSON object (no markdown, no backticks, no explanation).
+The scores must be unique and specifically calculated based on your simulated audit of {domain}. 
+DO NOT repeat the example values below.
+
 {{
-  "score": 38,
+  "score": [OVERALL_SCORE_0_100],
   "scores": {{
-    "Performance": 42,
-    "SEO": 31,
-    "Mobile": 45,
-    "Accessibility": 55,
-    "Security": 28
+    "Performance": [0_100],
+    "SEO": [0_100],
+    "Mobile": [0_100],
+    "Accessibility": [0_100],
+    "Security": [0_100]
   }},
   "verdict": "One brutal one-liner.",
   "burns": [
