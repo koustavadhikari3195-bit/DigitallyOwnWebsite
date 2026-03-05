@@ -238,6 +238,22 @@ nav {
   flex-shrink: 0;
 }
 
+/* LOCAL CLOCK PILL */
+.clock-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 14px;
+  margin-left: 12px;
+  border: 1px solid rgba(22, 32, 46, .8);
+  background: rgba(12, 16, 24, .6);
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  color: var(--white);
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
 /* NAV LINKS */
 .nav-links {
   display: flex;

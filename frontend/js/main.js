@@ -105,11 +105,28 @@ async function submitLead() {
     }
 }
 
+// ── LOCAL CLOCK ──────────────────────────────────────────────────────────────
+function updateLocalClock() {
+    const clockTxt = document.getElementById('clock-txt');
+    if (!clockTxt) return;
+
+    const now = new Date();
+    const timeString = now.toLocaleTimeString('en-US', {
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit',
+        hour12: true
+    });
+
+    clockTxt.textContent = timeString;
+}
+
 // ── BOOT ─────────────────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     initCursor();
     initReveals();
     initStack();
+    updateLocalClock();
 
     if (typeof loadStocks === 'function') loadStocks(API);
     if (typeof loadWeather === 'function') loadWeather(API);
@@ -121,4 +138,7 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(() => {
         if (typeof loadWeather === 'function') loadWeather(API);
     }, 10 * 60 * 1000);
+
+    setInterval(updateLocalClock, 1000); // Tick every second
 });
+

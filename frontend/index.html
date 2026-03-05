@@ -10,6 +10,13 @@
   <link rel="icon" type="image/svg+xml" href="favicon.svg">
   <title>Digitally — Precision Marketing. Robust Engineering.</title>
 
+  <!-- Performance Optimization: Resource Hints -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://unpkg.com">
+  <link rel="preconnect" href="https://cdn.tailwindcss.com">
+  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+
   <!-- Fonts -->
   <link
     href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap"
@@ -19,9 +26,11 @@
   <script src="https://unpkg.com/htmx.org@1.9.10"></script>
   <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <script src="https://cdn.tailwindcss.com"></script>
-  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-  <!-- Custom Styles -->
+  <!-- Custom Styles (Preloaded for faster paint) -->
+  <link rel="preload" href="css/main.css" as="style">
   <link rel="stylesheet" href="css/main.css">
 
   <!-- Tailwind Config (for custom colors/fonts if needed) -->

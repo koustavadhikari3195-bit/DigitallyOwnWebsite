@@ -19,6 +19,7 @@ from datetime import datetime, timezone
 import io
 from flask import Flask, jsonify, request, send_from_directory, render_template, send_file
 from flask_cors import CORS
+from flask_compress import Compress
 from dotenv import load_dotenv
 import yfinance as yf
 import requests
@@ -35,6 +36,7 @@ load_dotenv()
 
 app = Flask(__name__, static_folder="../frontend", static_url_path="")
 CORS(app)
+Compress(app)
 
 
 @app.after_request
@@ -43,6 +45,18 @@ def add_security_headers(resp):
     resp.headers["X-Frame-Options"] = "SAMEORIGIN"
     resp.headers["X-XSS-Protection"] = "1; mode=block"
     resp.headers["Referrer-Policy"] = "strict-origin-when-cross-origin"
+    # Security Hardening: HSTS
+    resp.headers["Strict-Transport-Security"] = "max-age=31536000; includeSubDomains"
+    # Security Hardening: CSP
+    csp = (
+        "default-src 'self'; "
+        "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://unpkg.com https://cdn.tailwindcss.com https://cdn.jsdelivr.net; "
+        "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; "
+        "font-src 'self' https://fonts.gstatic.com; "
+        "img-src 'self' data:; "
+        "connect-src 'self' https://api.open-meteo.com"
+    )
+    resp.headers["Content-Security-Policy"] = csp
     return resp
 
 
