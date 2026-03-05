@@ -1,0 +1,9 @@
+# Digitally Agency — Production Dependencies
+flask>=3.0
+flask-cors>=6.0
+python-dotenv>=1.0
+yfinance>=0.2
+pymongo>=4.6
+requests>=2.31
+gunicorn>=22.0
+weasyprint>=62.0

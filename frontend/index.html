@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Digitally Agency - Precision Marketing & Robust Engineering. AI-powered website audits, performance marketing, and full-stack development.">
+  <meta name="robots" content="index, follow">
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <title>Digitally — Precision Marketing. Robust Engineering.</title>
+
+  <!-- Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&family=JetBrains+Mono:wght@300;400;500&display=swap"
+    rel="stylesheet">
+
+  <!-- Libraries -->
+  <script src="https://unpkg.com/htmx.org@1.9.10"></script>
+  <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+  <!-- Custom Styles -->
+  <link rel="stylesheet" href="css/main.css">
+
+  <!-- Tailwind Config (for custom colors/fonts if needed) -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            digitally: {
+              cyan: '#00f5d4',
+              blue: '#0ea5e9',
+              deep: '#07090f',
+              panel: '#0c1018'
+            }
+          },
+          fontFamily: {
+            syne: ['Syne', 'sans-serif'],
+            mono: ['Space Mono', 'monospace'],
+            jb: ['JetBrains Mono', 'monospace']
+          }
+        }
+      }
+    }
+  </script>
+</head>
+
+<body hx-headers='{"X-CSRFToken": "TBD-IF-NEEDED"}'>
+
+  <!-- CUSTOM CURSOR -->
+  <div id="cur"></div>
+  <div id="cur-r"></div>
+
+  <!-- HEADER / NAVBAR -->
+  <div hx-get="components/navbar.html" hx-trigger="load" hx-swap="outerHTML"></div>
+
+  <!-- MAIN CONTENT -->
+  <main>
+    <div hx-get="components/hero.html" hx-trigger="load" hx-swap="outerHTML"></div>
+    <div hx-get="components/split.html" hx-trigger="load" hx-swap="outerHTML"></div>
+    <div hx-get="components/roaster.html" hx-trigger="load" hx-swap="outerHTML"></div>
+    <div hx-get="components/services.html" hx-trigger="load" hx-swap="outerHTML"></div>
+    <div hx-get="components/testimonials.html" hx-trigger="load" hx-swap="outerHTML"></div>
+    <div hx-get="components/stack.html" hx-trigger="load" hx-swap="outerHTML"></div>
+    <div hx-get="components/contact.html" hx-trigger="load" hx-swap="outerHTML"></div>
+  </main>
+
+  <!-- FOOTER -->
+  <div hx-get="components/footer.html" hx-trigger="load" hx-swap="outerHTML"></div>
+
+  <!-- CHAT INTERFACE -->
+  <div hx-get="components/chat.html" hx-trigger="load" hx-swap="outerHTML"></div>
+
+  <!-- REVEAL INITIALIZER (Triggered after HTMX loads content) -->
+  <script>
+    document.body.addEventListener('htmx:afterOnLoad', function (evt) {
+      // Re-initialize reveals and other logic once components are injected
+      if (typeof initReveals === 'function') initReveals();
+
+      // Specifically for sections that need their own init logic
+      if (evt.detail.target.id === 'stack') {
+        if (typeof initStack === 'function') initStack();
+      }
+    });
+  </script>
+
+  <!-- JS Modules -->
+  <script src="js/ticker.js"></script>
+  <script src="js/weather.js"></script>
+  <script src="js/roaster.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/main.js"></script>
+
+</body>
+
+</html>

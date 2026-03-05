@@ -1,0 +1,24 @@
+<!-- ── Digitally Agency — Chat Component ──────────────────────────────────── -->
+<button id="chat-fab" onclick="toggleChat()" title="Chat with Digitally AI">
+    <svg id="chat-icon" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#030407" stroke-width="2.2">
+        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+    </svg>
+</button>
+
+<div id="chat-panel">
+    <div class="chat-hd">
+        <div>
+            <div class="chat-hd-t">Digitally AI — Powered by Groq</div>
+            <div class="chat-hd-sub">Strategy advisor · Always online</div>
+        </div>
+        <button id="chat-close" onclick="toggleChat()">✕</button>
+    </div>
+    <div id="chat-msgs">
+        <div class="msg bot">Hey! I'm your Digitally strategy advisor. Ask me anything about marketing, SEO, web
+            performance, or your roast results.</div>
+    </div>
+    <div class="chat-foot">
+        <input type="text" id="chat-in" placeholder="Ask anything…" onkeydown="if(event.key==='Enter')sendChat()" />
+        <button id="chat-send" onclick="sendChat()">SEND</button>
+    </div>
+</div>

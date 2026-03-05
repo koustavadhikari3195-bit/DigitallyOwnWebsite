@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.env
+.venv
+venv/
+ENV/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Project
+backend/.env
+backend/__pycache__/
+.cache/
+.pytest_cache/
+*.log
+
+# WeasyPrint / Gtk temp files
+*.pdf
